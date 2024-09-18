@@ -5,7 +5,13 @@
   "exports": {
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./code": "./src/code.tsx",
+    "./AppBar": "./src/AppBar.tsx",
+    "./SideBar": "./src/SideBar.tsx",
+    "./NavBar": "./src/NavBar.tsx",
+    "./TextInput": "./src/TextInput.tsx",
+    "./Select": "./src/Select.tsx",
+    "./Center": "./src/Center.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
