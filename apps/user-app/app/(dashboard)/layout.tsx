@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }): JSX
             <SideBarItems icon={HomeIcon()} title={"Home"} href={"/dashboard"} />
             <SideBarItems icon={TransferIcon()} title={"Transfer"} href={"/transfer"} />
             <SideBarItems icon={TransactionIcon()} title={"Transactions"} href={"/transactions"} />
-            <SideBarItems icon={PeerToPeerIcon()} title="P2P Transfer" href={"/p2p"} />
+            <SideBarItems icon={PeerToPeerIcon()} title={"P2P Transfer"} href={"/p2p"} />
         </div>
         {children}
     </div>

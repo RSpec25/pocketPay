@@ -79,3 +79,25 @@ Learn more about the power of Turborepo:
 - [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
 - [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
 - [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+
+
+Things to remember:-
+1. money shouldnt transfer 2 times by fast clicking withdraw button. - queue or something which pass one trsxn at a time
+2. webhook need to add money once shouldnt add money twice in 2 request. - need a token or something that turns true or expires
+3. sending money to someone should debit and credit only once - transactions need to be used
+4. cors need to allow only bank server to make request to avoid hacker add funds.
+5. if bank offline, need to send request again in continous interval.
+6. scale it for handling multiple requests.
+7. ratelimiting
+8. // add kafka to webhook and BE subscribe to queue
+https://dev.to/manjufy/rest-api-how-to-avoid-duplicate-resource-creation-on-concurrent-requests-o23 - avoid dublicate resource creation.
+9. share password between webhook and hdfc so that no one else can make similar req to webhook.
+10. if pending for 2 hous make it failed in onramping ------> ?
+11. elastic search to recommmend user userid/phone numb while p2p
+12. Bun compiler run very fast then v8 for node/ run test very fast
+13. Add locks even after trsxn not safe/ multiple request comes. use locking of rows to prevent this.
+
+Commands:
+1. npx create-turbo@latest
+2. add tailwind from tailwind doc - npm install -D tailwindcss / npx init tailwindcss -p
+3. 

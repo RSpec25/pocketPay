@@ -8,6 +8,8 @@ export const OnRampTransaction = ({ transactions }: {
         provider: string
     }[]
 }) => {
+    console.log("inside ramp trsxn card");
+    
     if (!transactions.length) {
         return <Card title="Recent Transactions">
             <div className="text-center pb-8 pt-8">

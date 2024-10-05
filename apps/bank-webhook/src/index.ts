@@ -3,7 +3,6 @@ import db from "@repo/prisma/client";
 const app = express();
 
 app.use(express.json())
-app.use(express.json())
 
 app.post("/hdfcWebhook", async (req, res) => {
     //TODO: Add zod validation here?
@@ -17,7 +16,26 @@ app.post("/hdfcWebhook", async (req, res) => {
         userId: req.body.userId,
         amount: req.body.amount
     };
+    // check if already successfull onramping. // avoiding double addition.
+    const check =await db.onramping.findFirst({
+        where:{
+            token: paymentInformation.token
+        }
+    })
+    if(check==null){
+        res.status(411).json({
+            message: "Invalid values..."
+        })
+        return null;
+    }
 
+    if(check.userId != Number(paymentInformation.userId) || check.status !== "pending"){
+        res.status(411).json({
+            msg: "already added/ wrong user!!"
+        })
+        return;
+    }
+    //successfull onramping....
     try {
         await db.$transaction([
             db.balance.updateMany({

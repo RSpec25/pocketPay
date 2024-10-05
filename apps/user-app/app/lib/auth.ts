@@ -1,6 +1,12 @@
 import prisma from "@repo/prisma/client"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcrypt";
+// import z from "zod";
+
+// const cred =z.object({
+//     phone: z.string(),
+//     password: z.string()
+// })
 
 console.log("inside auth component");
 //Partial<Record<"phone" | "password", unknown>> 
@@ -12,12 +18,23 @@ export const authOption = {
                 phone: { label: "Phone number", type: "text", placeholder: "Enter after +91", required: true },
                 password: { label: "Password", type: "password", required: true }
             },
-            async authorize(credentials: any) {
-                //zod otp val
+            
+            async authorize(credentials:Record<"phone" | "password", string> | undefined) {
+                //zod otp val - remove type error
+                // const success = cred.safeParse(credentials);
+                // if(!success){
+                //     console.log("invalid types");
+                //     return null;
+                // }
+                if(!credentials){
+                    console.log("no creds found")
+                    return null;
+                }
+                console.log(credentials);
                 const hash = await bcrypt.hash(credentials.password, 10);
                 const exist = await prisma.user.findFirst({
                     where: {
-                        number: credentials.phone
+                        number: parseInt(credentials.phone)
                     }
                 });
                 try {
@@ -40,11 +57,18 @@ export const authOption = {
                 try {
                     const newUser = await prisma.user.create({
                         data: {
-                            number: credentials.phone,
+                            number: parseInt(credentials.phone),
                             password: hash
                         }
                     })
                     // send otp to user ph num
+                    await prisma.balance.create({
+                        data:{
+                            amount: 0,
+                            locked: 0,
+                            userId: newUser.id,
+                        }
+                    })
                     console.log("new user", newUser);
                     return {
                         id: newUser.id.toString(),

@@ -10,7 +10,7 @@ export const SendCard = () => {
     const redirect = "dashboard";
     const [phone, setPhone] = useState(0);
     const [amount, setAmount] = useState(0);
-    return <div className="">
+    return <div>
         <Center>
             <Card title="Send Money">
                 <div className="min-w-72 pt-2">
@@ -30,3 +30,4 @@ export const SendCard = () => {
         </Center>
     </div>
 }
+// className="h-[94vh]"

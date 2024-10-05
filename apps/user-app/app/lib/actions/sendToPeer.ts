@@ -3,9 +3,11 @@ import prisma from "@repo/prisma/client"
 import { getServerSession } from "next-auth"
 import { authOption } from "../auth"
 
-
+// After sending to peers added that to transactions list....
 
 export const SendToPeer = async (receiver: number, amount: number) => {
+    console.log("Inside send 2 peer",receiver);
+    
     const session = await getServerSession(authOption);
     const from = session?.user?.id;
     if (!from) {
@@ -36,6 +38,14 @@ export const SendToPeer = async (receiver: number, amount: number) => {
             await tx.balance.update({
                 where: { userId: to.id },
                 data: { amount: { increment: amount } }
+            })
+            await tx.p2pTransaction.create({
+                data:{
+                    timestamp: new Date,
+                    amount,
+                    fromUserId: Number(from),
+                    toUserId: to.id
+                }
             })
 
             return {

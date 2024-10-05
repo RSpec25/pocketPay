@@ -8,10 +8,10 @@ import { authOption } from "../auth"
 export default async function CreateOnRamp(provider: string, amount: number) {
     //ideally token would come from baking provider.
     const session = await getServerSession(authOption);
-    console.log("provider", provider);
-    if (!session?.user || !session?.user.id) { return { message: "Unauthenticated Request" } }
-
-    const token = (Math.random() * 1000).toString(); // usually get from the servcice provider
+    // console.log("provider", provider);
+    if (!session?.user || !session?.user.id) { return { message: "Unauthenticated Request" } } // extract from session instead of getting from onclick req as might lead to vulnerabiltity.
+    // user can send diffr id
+    const token = (Math.random() * 1000).toString(); // usually get from the servcice provider -> ex) axios.get("http://api.hdfcbank/getToken")
     await prisma.onramping.create({
         data: {
             userId: parseInt(session.user.id),
